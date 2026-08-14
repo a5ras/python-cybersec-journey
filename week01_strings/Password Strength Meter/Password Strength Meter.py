@@ -40,7 +40,7 @@ def analyze(password):
             score=25
     else:
             score=40
-    if any(c in string.punctuation for c in password ):
+    if any(c in string.punctuation for c in password):
         score += 10
     else:
         feedback.append("add at least one symbol!")
@@ -79,3 +79,5 @@ if __name__ == "__main__":
         print("Suggestions: "+", ".join(feedback))
     else:
         print("Excellent password!")
+
+# TODO: stretch goals
