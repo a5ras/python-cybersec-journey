@@ -13,6 +13,7 @@ import string, secrets
 def userChoice():
     choices = (("1. lower", "2. upper", "3. digits", "4. symbols", "5. generate"))
     charset =""
+    selected_sets = []
     for choice in choices:
         print(choice)
     while True:
@@ -21,19 +22,26 @@ def userChoice():
             break
         if choice == "1":
             charset += string.ascii_lowercase
+            selected_sets.append(string.ascii_lowercase)
         if choice == "2":
             charset += string.ascii_uppercase
+            selected_sets.append(string.ascii_uppercase)
         if choice == "3":
             charset += string.digits
+            selected_sets.append(string.digits)
         if choice == "4":
             charset += string.punctuation
-    return charset
-def generatePassword(charset):
+            selected_sets.append(string.punctuation)
+    return charset, selected_sets
+def generatePassword(charset, liste):
     length = int(input("What is the length you want : "))
-    password = ""
-    for _ in range(length):
-        password += secrets.choice(charset)
-    print(password)
+    password = []
+    for s in liste:
+        password.append(secrets.choice(s))
+    for _ in range(length - len(liste)):
+        password.append(secrets.choice(charset))
+    secrets.SystemRandom().shuffle(password)
+    print("".join(password))
 
-x = userChoice()
-generatePassword(x)
+charset, liste = userChoice()
+generatePassword(charset, liste)
